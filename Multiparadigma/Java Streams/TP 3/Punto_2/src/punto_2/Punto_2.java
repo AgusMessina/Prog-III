@@ -4,17 +4,6 @@
  */
 package punto_2;
 
-import java.util.List;
-import java.util.stream.Stream;
-import static java.util.stream.Collectors.toList;
-import static java.util.Arrays.asList;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.stream.Collectors;
-/**
- *
- * @author Usuario
- */
 public class Punto_2 {
 
     /**
@@ -28,20 +17,22 @@ public class Punto_2 {
                 .collect(
                         Collectors.maxBy(
                                 Comparator.comparingInt(String::length)));
+        System.out.println("Nombre mas largo (Collector): " + nombreCollector.get());
         
         //b)
-        int t;
-        Optional<String> nombreReduce = names
-                .reduce(t, Integer::Length)         //CORREGIR, FUNCIONA COMO UN FOLD DE HASKELL Y USAR EL ACUMULADOR
-                .collect(toList());
+        String nombreReduce = names
+                .reduce("", (a,b) -> (a.length() > b.length()) ?  a : b);               // EL ? SIRVE PARA COMPARAR b CON a        
+        
+        
+        
+        Optional <String> nombreReduceO = names                         
+                .reduce((a,b) -> (a.length() > b.length()) ?  a : b);                   // EL ? SIRVE PARA COMPARAR b CON a  
+        
                 
         
-        //names.forEach(System.out::println);
-        //String auxString = names.collect(Collectors.joining(", "));
-       // System.out.println("Nombres: \n" + auxString);
-        //Supuestamente eso imprime al Stream, pero por alguna razon (Seguramente version del IDE) no anda
-        
-        System.out.println("Nombre mas largo (Collector): " + nombreCollector.get());
+        System.out.println("Nombre mas largo (Reduce): " + nombreReduce);
+        System.out.println("Nombre mas largo (Reduce Optional): " + nombreReduceO.get());
     }
     
 }
+
